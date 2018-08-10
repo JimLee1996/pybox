@@ -92,9 +92,9 @@ class DataBase:
         """
 
         query = self._serialize_insert(data)
-        sql = 'INSERT INTO %s (%s) VALUES(%s)' % (table, query[0], query[1])
+        sql = 'INSERT INTO %s (%s) VALUES (%s)' % (table, query[0], query[1])
 
-        return self.query(sql, data.values()).rowcount
+        return self.query(sql, tuple(data.values())).rowcount
 
     def update(self, table, data, where=None):
         """
@@ -107,8 +107,8 @@ class DataBase:
             sql += ' WHERE %s' % where[0]
 
         return self.query(
-            sql, data.values() + where[1] if where and len(where) > 1
-            else data.values()).rowcount
+            sql, tuple(data.values()) + where[1] if where and len(where) > 1
+            else tuple(data.values())).rowcount
 
     def delete(self, table, where=None):
         """
