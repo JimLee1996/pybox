@@ -20,14 +20,15 @@ class PortScanner:
     # default connection timeout time in seconds
     __delay = 10
 
-
     @classmethod
     def __usage(cls):
         """
         Return the usage information for invalid input host name.
         """
         print('python Port Scanner v0.1')
-        print('please make sure the input host name is in the form of "something.com" or "http://something.com!"\n')
+        print(
+            'please make sure the input host name is in the form of "something.com" or "http://something.com!"\n'
+        )
 
     def __init__(self, target_ports=None):
         """
@@ -56,12 +57,12 @@ class PortScanner:
         :return: top K commonly used port list.
         """
         if (
-            target_port_rank != 50 and
-            target_port_rank != 100 and
+            target_port_rank != 50 and target_port_rank != 100 and
             target_port_rank != 1000
         ):
             raise ValueError(
-                'Invalid port rank {}. Should be 50, 100 or 1,000.'.format(target_port_rank)
+                'Invalid port rank {}. Should be 50, 100 or 1,000.'.
+                format(target_port_rank)
             )
 
         if target_port_rank == 50:
@@ -101,10 +102,16 @@ class PortScanner:
             # May need to return specific value to indicate the failure.
 
         start_time = time.time()
-        output = self.__scan_ports(server_ip, self.__delay, message.encode('utf-8'))
+        output = self.__scan_ports(
+            server_ip, self.__delay, message.encode('utf-8')
+        )
         stop_time = time.time()
 
-        print('host {} scanned in  {} seconds'.format(host_name, stop_time - start_time))
+        print(
+            'host {} scanned in  {} seconds'.format(
+                host_name, stop_time - start_time
+            )
+        )
         print('finished scan!\n')
 
         return output
@@ -120,7 +127,8 @@ class PortScanner:
         if limit <= 0 or limit > 50000:
             print(
                 'Warning: Invalid thread number limit {}!'
-                'Please make sure the thread limit is within the range of (1, 50,000)!'.format(limit)
+                'Please make sure the thread limit is within the range of (1, 50,000)!'
+                .format(limit)
             )
             print('The scanning process will use default thread limit 1,000.')
             return
@@ -137,9 +145,12 @@ class PortScanner:
         if delay <= 0 or delay > 100:
             print(
                 'Warning: Invalid delay value {} seconds!'
-                'Please make sure the input delay is within the range of (1, 100)'.format(delay)
+                'Please make sure the input delay is within the range of (1, 100)'
+                .format(delay)
             )
-            print('The scanning process will use the default delay time 10 seconds.')
+            print(
+                'The scanning process will use the default delay time 10 seconds.'
+            )
             return
 
         self.__delay = delay
@@ -151,8 +162,8 @@ class PortScanner:
         :return: list of ports scanned by current Scanner object.
         :rtype: list
         """
-        print ('Current port list is:')
-        print (self.target_ports)
+        print('Current port list is:')
+        print(self.target_ports)
         return self.target_ports
 
     def show_delay(self):
@@ -162,7 +173,7 @@ class PortScanner:
         :return: timeout interval of the TCP connection in seconds.
         :rtype: int
         """
-        print ('Current timeout delay is {} seconds.'.format(self.__delay))
+        print('Current timeout delay is {} seconds.'.format(self.__delay))
         return self.__delay
 
     def show_top_k_ports(self, k):
@@ -198,10 +209,16 @@ class PortScanner:
 
         while port_index < len(self.target_ports):
             # Ensure the number of concurrently running threads does not exceed the thread limit
-            while threading.activeCount() < self.__thread_limit and port_index < len(self.target_ports):
+            while threading.activeCount(
+            ) < self.__thread_limit and port_index < len(self.target_ports):
                 # Start threads
-                thread = threading.Thread(target=self.__TCP_connect,
-                                          args=(ip, self.target_ports[port_index], delay, output, message))
+                thread = threading.Thread(
+                    target=self.__TCP_connect,
+                    args=(
+                        ip, self.target_ports[port_index], delay, output,
+                        message
+                    )
+                )
                 thread.start()
                 port_index = port_index + 1
             time.sleep(0.01)
@@ -222,7 +239,9 @@ class PortScanner:
         """
         output = {}
 
-        thread = threading.Thread(target=self.__scan_ports_helper, args=(ip, delay, output, message))
+        thread = threading.Thread(
+            target=self.__scan_ports_helper, args=(ip, delay, output, message)
+        )
         thread.start()
 
         # Wait until all ports being scanned

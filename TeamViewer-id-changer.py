@@ -9,11 +9,13 @@ import re
 import random
 import string
 
-print('''
+print(
+    '''
 --------------------------------
 TeamViewer ID Changer for MAC OS
 --------------------------------
-''')
+'''
+)
 
 if platform.system() != 'Darwin':
     print('This script can be run only on MAC OS.')
@@ -51,21 +53,25 @@ for file in listdir_fullpath(HOMEDIRLIB):
         CONFIGS.append(file)
 
 if not CONFIGS:
-    print('''
+    print(
+        '''
 There is no TemViewer configs found.
 Maybe you have deleted it manualy or never run TeamViewer after installation.
 Nothing to delete.
-''')
+'''
+    )
 # Delete config files
 else:
     print("Configs found:\n")
     for file in CONFIGS:
         print file
 
-    print('''
+    print(
+        '''
 This files will be DELETED permanently.
 All TeamViewer settings will be lost
-''')
+'''
+    )
     raw_input("Press Enter to continue or CTR+C to abort...")
 
     for file in CONFIGS:
@@ -102,8 +108,10 @@ def idpatch(fpath, platf, serial):
     SerialPattern = "IOPlatformSerialNumber%s%s%sUUID"
 
     binary = re.sub(PlatformPattern, platf, binary)
-    binary = re.sub(SerialPattern % (chr(0), "[0-9a-zA-Z]{8,8}", chr(0)),
-                    SerialPattern % (chr(0), serial, chr(0)), binary)
+    binary = re.sub(
+        SerialPattern % (chr(0), "[0-9a-zA-Z]{8,8}", chr(0)),
+        SerialPattern % (chr(0), serial, chr(0)), binary
+    )
 
     file = open(fpath, 'wb').write(binary)
     return True
@@ -127,7 +135,9 @@ for file in TMBINARYES:
 print "PlatformDevice: " + RANDOMPLATFORM
 print "PlatformSerial: " + RANDOMSERIAL
 
-print('''
+print(
+    '''
 ID changed sucessfully.
 !!! Restart computer before using TeamViewer !!!!
-''')
+'''
+)

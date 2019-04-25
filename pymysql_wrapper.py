@@ -36,10 +36,15 @@ class DataBase:
             self.conn = pymysql.connect(**self.conf)
             self.cur = self.conn.cursor()
         except ConnectionError:
-            print('%s@%s\nConnection Failed!' % (self.conf['user'], self.conf['host']))
+            print(
+                '%s@%s\nConnection Failed!' %
+                (self.conf['user'], self.conf['host'])
+            )
             raise
 
-    def get_one(self, table=None, fields='*', where=None, order=None, limit=(0, 1)):
+    def get_one(
+        self, table=None, fields='*', where=None, order=None, limit=(0, 1)
+    ):
         """
         Get a single result
 
@@ -61,7 +66,9 @@ class DataBase:
 
         return row
 
-    def get_all(self, table=None, fields='*', where=None, order=None, limit=None):
+    def get_all(
+        self, table=None, fields='*', where=None, order=None, limit=None
+    ):
         """
         Get all results
 
@@ -107,8 +114,10 @@ class DataBase:
             sql += ' WHERE %s' % where[0]
 
         return self.query(
-            sql, tuple(data.values()) + where[1] if where and len(where) > 1
-            else tuple(data.values())).rowcount
+            sql,
+            tuple(data.values()) + where[1]
+            if where and len(where) > 1 else tuple(data.values())
+        ).rowcount
 
     def delete(self, table, where=None):
         """
@@ -118,7 +127,8 @@ class DataBase:
         if where and len(where) > 0:
             sql += ' WHERE %s' % where[0]
         return self.query(
-            sql, where[1] if where and len(where) > 1 else None).rowcount
+            sql, where[1] if where and len(where) > 1 else None
+        ).rowcount
 
     def query(self, sql, params=None):
         """
@@ -161,7 +171,9 @@ class DataBase:
         """
         return '=%s'.join(data.keys()) + '=%s'
 
-    def _select(self, table=None, fields=(), where=None, order=None, limit=None):
+    def _select(
+        self, table=None, fields=(), where=None, order=None, limit=None
+    ):
         """
         Run a select query
         """

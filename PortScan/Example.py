@@ -8,7 +8,6 @@ def main():
     host_name = '192.168.1.1'
 
     message = 'put whatever message you want here'
-
     '''
     output contains a dictionary of {port:status} pairs
     in which port is the list of ports we scanned 
