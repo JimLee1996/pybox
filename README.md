@@ -11,3 +11,7 @@ PyBox is a collection of lightweight useful tools written in Python.
 - PortScan
 
     is a port scanner of some features. An example is given in the package.
+
+- fast_color_detection
+
+    is a color judger based on OpenCV.
